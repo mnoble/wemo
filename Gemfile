@@ -1,0 +1,6 @@
+gem "upnp", git: "https://github.com/turboladen/upnp.git"
+gem "sinatra"
+gem "shotgun"
+gem "active_support"
+gem "i18n"
+gem "pry"
