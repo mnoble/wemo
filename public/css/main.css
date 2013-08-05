@@ -1,0 +1,97 @@
+@font-face {
+  font-family: "FontAwesome";
+  src: url("/fonts/fontawesome-webfont.eot");
+  src: url("/fonts/fontawesome-webfont.eot?#iefix") format('eot'), 
+       url("/fonts/fontawesome-webfont.woff") format('woff'), 
+       url("/fonts/fontawesome-webfont.ttf") format('truetype'), 
+       url("/fonts/fontawesome-webfont.svg#FontAwesome") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font: 16px Helvetica; 
+  background: #1C1C1C;
+}
+
+ul li {
+  list-style: none; 
+}
+
+.device { 
+  position: relative; 
+  font-family: FontAwesome; 
+  width: 100px; 
+  height: 150px; 
+  border-radius: 6px; 
+  float: left; 
+  margin: 0 5px 5px 0;
+}
+
+.device .title { 
+  display: block; 
+  margin-top: 15px; 
+  text-align: center; 
+  color: #FFFFFF;
+  font-family: Helvetica;
+}
+
+.device .state:before {
+  content: "";
+  width: 46px;
+  height: 47px;
+  display: block;
+  z-index: -2;
+  position: absolute;
+  background-color: rgb(26,27,29);
+  left: -4px;
+  top: -2px;
+  border-radius: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.5);
+ }
+
+.device .state { 
+  position: absolute; 
+  bottom: 25px;
+  left: 32px;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 30px; 
+  padding: 8px 10px 10px 10px;
+  color: rgb(37, 37, 37);
+  font-size: 23px;
+  text-shadow: 0px 1px 1px rgba(250, 250, 250, 0.1);
+  background: rgb(83, 87, 93);
+  box-shadow: 0px 3px 0px rgb(34, 34, 34),
+              0px 7px 10px 0px rgb(17, 17, 17),
+              inset 0px 1px 1px 0px rgba(250, 250, 250, 0.2),
+              inset 0px -12px 35px 0px rgba(0, 0, 0, 0.5);
+}
+
+.device .state:hover {
+  cursor: pointer;
+}
+
+.device .state.on {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.device .light {
+  width: 8px;
+  height: 8px;
+  background: rgb(226, 0, 0);
+  box-shadow: inset 0 1px 0px 0px rgba(250, 250, 250, 0.5),
+              0px 0px 3px 2px rgba(226, 0, 0, 0.5);
+  border-radius: 4px;
+  clear: both;
+  position: absolute;
+  bottom: 0;
+  left: 48px;
+}
+
+.device .light.on {
+  box-shadow: inset 0px 1px 0px 0px rgba(250, 250, 250, 0.5),
+              0px 0px 3px 2px rgba(135, 187, 83, 0.5);
+  background: rgb(135, 187, 83);
+}

@@ -1,9 +1,13 @@
+require "bundler/setup"
 require "sinatra/base"
 require "upnp/ssdp"
 require "net/http"
 require "uri"
 require "active_support/all"
 require "i18n"
+require "pry"
+require_relative "lib/wemo"
+UPnP.log = false
 
 module Wemo
   class Application < Sinatra::Base
@@ -12,36 +16,13 @@ module Wemo
     end
 
     helpers do
-      def devices
-        UPnP::SSDP.search.
-          uniq { |response| response[:location] }.
-          map  { |response| Device.new(response[:location]) }.
-          sort_by(&:name)
+      def wemos
+        devices("urn:Belkin:device:controllee:1")
       end
-    end
-  end
 
-  class Device
-    attr_accessor :attributes
-
-    def initialize(xml_location)
-      @attributes = Hash.from_xml(Net::HTTP.get(URI(xml_location)))["root"]["device"]
-    end
-
-    def name
-      attributes["friendlyName"]
-    end
-
-    def state
-      attributes["binaryState"] == "1" ? "on" : "off"
-    end
-
-    def on?
-      state == "on"
-    end
-
-    def off?
-      state == "off"
+      def devices(type)
+        UPnP::SSDP.search(type).uniq.map { |res| Wemo::Switch.new(res[:location]) }.sort_by(&:name)
+      end
     end
   end
 end

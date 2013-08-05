@@ -11,6 +11,7 @@ GIT
       savon (~> 2.0)
 
 GEM
+  remote: http://rubygems.org/
   specs:
     active_support (3.0.0)
       activesupport (= 3.0.0)
@@ -19,6 +20,7 @@ GEM
     akami (1.2.0)
       gyoku (>= 0.4.0)
       nokogiri (>= 1.4.0)
+    awesome_print (1.1.0)
     builder (3.2.2)
     coderay (1.0.9)
     cookiejar (0.3.0)
@@ -36,12 +38,17 @@ GEM
     gyoku (1.1.0)
       builder (>= 2.1.2)
     http_parser.rb (0.6.0.beta.2)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     httpi (2.1.0)
       rack
       rubyntlm (~> 0.3.2)
     i18n (0.6.4)
     log_switch (0.4.0)
     method_source (0.8.2)
+    multi_json (1.7.7)
+    multi_xml (0.5.4)
     nokogiri (1.5.10)
     nori (2.3.0)
     pry (0.9.12.2)
@@ -77,6 +84,8 @@ PLATFORMS
 
 DEPENDENCIES
   active_support
+  awesome_print
+  httparty
   i18n
   pry
   shotgun
