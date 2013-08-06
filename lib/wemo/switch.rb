@@ -44,15 +44,15 @@ module Wemo
     private
 
     def setup
-      Net::HTTP.get(URI.parse("#{location}/setup.xml"))
+      Net::HTTP.get(URI.parse("http://#{location}/setup.xml"))
     end
 
     def state
-      basic_service.send(Actions::GetBinaryState.new, Responses::BinaryState)
+      basic_event.send(Actions::GetBinaryState.new, Responses::BinaryState)
     end
 
-    def basic_service
-      Services::BasicService.new(self)
+    def basic_event
+      Services::BasicEvent.new(self)
     end
   end
 end
