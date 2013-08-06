@@ -30,11 +30,11 @@ module Wemo
     end
 
     def on!
-      basic_service.send(Actions::SetBinaryState.new(state: "1"))
+      basic_event.send(Actions::SetBinaryState.new(state: "1"))
     end
 
     def off!
-      basic_service.send(Actions::SetBinaryState.new(state: "0"))
+      basic_event.send(Actions::SetBinaryState.new(state: "0"))
     end
 
     def set!(state)
@@ -44,7 +44,11 @@ module Wemo
     private
 
     def setup
-      Net::HTTP.get(URI.parse("http://#{location}/setup.xml"))
+      Net::HTTP.get(URI.parse("#{schemize(location)}/setup.xml"))
+    end
+
+    def schemize(uri)
+      uri =~ /^http/ ? uri : "http://#{uri}"
     end
 
     def state
