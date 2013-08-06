@@ -7,7 +7,7 @@ module Wemo
         @device = device
       end
 
-      def send(action, response_class)
+      def send(action, response_class=Responses::Raw)
         response_class.new %x(#{build(action)})
       end
 

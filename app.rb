@@ -15,13 +15,15 @@ module Wemo
       erb :index
     end
 
+    post "/wemos/:uuid/:state" do
+      wemo = Wemo::Switch.find(params[:uuid])
+      wemo.set! params[:state]
+      status 200
+    end
+
     helpers do
       def wemos
-        devices("urn:Belkin:device:controllee:1")
-      end
-
-      def devices(type)
-        UPnP::SSDP.search(type).uniq.map { |res| Wemo::Switch.new(res[:location]) }.sort_by(&:name)
+        Wemo::Radar.new("urn:Belkin:device:controllee:1").scan
       end
     end
   end

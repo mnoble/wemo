@@ -3,13 +3,18 @@
   <head>
     <title>WEMO</title>
     <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/switch.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(function() { $(".state").each(function(i,e) { new Switch(e) }) })
+    </script>
   </head>
   <body>
     <ul>
       <% wemos.each do |wemo| %>
         <li class="device">
           <strong class="title"><%= wemo.name %></strong>
-          <div class="state <%= "on" if wemo.on? %>">&#xF011;</div>
+          <div class="state <%= "on" if wemo.on? %>" data-id="<%= wemo.uuid %>">&#xF011;</div>
           <div class="light <%= "on" if wemo.on? %>"></div>
         </li>
       <% end %>

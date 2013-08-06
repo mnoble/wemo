@@ -1,14 +1,24 @@
+require "base64"
+
 module Wemo
   class Switch
     attr_accessor :location, :attributes
 
-    def initialize(uri)
-      @location   = uri.gsub %r(/[^/]*$), ""
-      @attributes = Hash.from_xml(Net::HTTP.get(URI(uri)))
+    def self.find(encoded_ip)
+      new(Base64.decode64(encoded_ip))
+    end
+
+    def initialize(location)
+      @location   = location
+      @attributes = Hash.from_xml(setup)
+    end
+
+    def uuid
+      @uuid ||= Base64.encode64(location)
     end
 
     def name
-      device_attributes["friendlyName"]
+      attributes["root"]["device"]["friendlyName"]
     end
 
     def on?
@@ -19,18 +29,30 @@ module Wemo
       !on?
     end
 
+    def on!
+      basic_service.send(Actions::SetBinaryState.new(state: "1"))
+    end
+
+    def off!
+      basic_service.send(Actions::SetBinaryState.new(state: "0"))
+    end
+
+    def set!(state)
+      state.to_s == "on" ? on! : off!
+    end
+
     private
 
+    def setup
+      Net::HTTP.get(URI.parse("#{location}/setup.xml"))
+    end
+
     def state
-      basic_service.send(Actions::GetBinaryState, Responses::BinaryState)
+      basic_service.send(Actions::GetBinaryState.new, Responses::BinaryState)
     end
 
     def basic_service
       Services::BasicService.new(self)
-    end
-
-    def device_attributes
-      attributes["root"]["device"]
     end
   end
 end
