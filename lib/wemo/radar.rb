@@ -1,14 +1,17 @@
 module Wemo
   class Radar
-    attr_accessor :device_type
+    attr_accessor :device_type, :repository
 
-    def initialize(device_type)
+    def initialize(device_type, repository)
       @device_type = device_type
+      @repository = repository
     end
 
     def scan
-      locations.map { |location| Wemo::Switch.new(location) }.sort_by(&:name)
+      locations.map { |location| repository.add Wemo::Switch.new(location) }
     end
+
+    private
 
     def locations
       UPnP::SSDP.search(device_type).uniq.map { |attrs| without_path(attrs[:location]) }

@@ -1,9 +1,12 @@
 source "http://rubygems.org"
 gem "upnp", git: "https://github.com/turboladen/upnp.git"
 gem "sinatra"
-gem "shotgun"
+gem "thin"
 gem "active_support"
 gem "i18n"
-gem "pry"
-gem "awesome_print"
-gem "httparty"
+
+group :development, :test do
+  gem "pry"
+  gem "awesome_print"
+end
+

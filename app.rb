@@ -23,7 +23,12 @@ module Wemo
 
     helpers do
       def wemos
-        Wemo::Radar.new("urn:Belkin:device:controllee:1").scan
+        scan if Repository.empty?
+        Repository.devices
+      end
+
+      def scan
+        Wemo::Radar.new("urn:Belkin:device:controllee:1", Repository).scan
       end
     end
   end
